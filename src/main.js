@@ -85,7 +85,7 @@ var obj = {
   }
 }
 
-document.getElementById('bouwjaar').innerText = 'obj.yearBuilt'
+document.getElementById('bouwjaar').innerText = obj.yearBuilt
 
 var imageContainer = document.getElementsByClassName('detail_list')[0]
 for (let i = 0; i < 4; i++) {
@@ -108,7 +108,12 @@ for (let i = 0; i < 4; i++) {
   // }
 }
 
+// Verantwoordelijke
 document.getElementById('realtor-name').innerText = obj.negotiator.firstName
+if (obj.negotiator.firstName == 'Wout' || obj.negotiator.lastName == 'Wout') {
+  document.getElementById('realtor-image').setAttribute('src', 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf13b0afb48204ca454_team_wout.png')
+}
+
 
 if (obj.plotArea) {
   var totaleOppCriterium = document.createElement("p")
