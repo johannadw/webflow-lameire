@@ -78,6 +78,11 @@ var obj = {
     { url: 'https://cdn.sweepbright.com/properties/presets/original/078ae215-e95c-4701-8abc-c0c25ef4c8dc' },
     { url: 'https://cdn.sweepbright.com/properties/presets/original/9625ecd0-b31b-4566-8dd4-5c66f7aa3e5a' }
   ],
+  yearBuilt: '1970',
+  negotiator: {
+    firstName: 'Calsijn',
+    lastName: 'Wout'
+  }
 }
 
 document.getElementById('bouwjaar').innerText = 'obj.yearBuilt'
@@ -103,6 +108,7 @@ for (let i = 0; i < 4; i++) {
   // }
 }
 
+document.getElementById('realtor-name').innerText = obj.negotiator.firstName
 
 if (obj.plotArea) {
   var totaleOppCriterium = document.createElement("p")
