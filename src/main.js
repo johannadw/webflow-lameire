@@ -13,9 +13,9 @@ var obj = {
   bathroomsNo: '2',
   livingroomsNo: '2',
   generalCondition: 'good',
-  // orientationTerrace: 'W',
-  // orientationGarden: 'E',
-  // orientationBalcony: '',
+  orientationTerrace: 'W',
+  orientationGarden: 'E',
+  orientationBalcony: '',
   // thumbnailImage: '',
   // videoUrl: '',
   // virtualTour: '',
@@ -61,9 +61,9 @@ var obj = {
   epcValue: '582',
   epcLevel: 'C',
   epcReference: '20221231-0002756082-RES-1',
-  // dpe: '',
-  // greenhouseEmissions: '',
-  // co2Emissions: '10',
+  dpe: '',
+  greenhouseEmissions: '',
+  co2Emissions: '10',
   energy: 'Gas,Fuel,Heat pump,Electricity',
   comfort: 'Sauna,Fireplace,Furnished,Home cinema,Wine cellar,Fitness room,Walk-in closet,Water softener,Home automation',
   ecology: 'Solar boiler,Solar panels,Double glazing,Insulated roof,Rainwater harvesting',
@@ -112,9 +112,68 @@ for (let i = 0; i < 4; i++) {
 document.getElementById('realtor-name').innerText = obj.negotiator.firstName
 if (obj.negotiator.firstName == 'Wout' || obj.negotiator.lastName == 'Wout') {
   document.getElementById('realtor-image').setAttribute('src', 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf13b0afb48204ca454_team_wout.png')
+} else if (obj.negotiator.firstName == 'Heidi' || obj.negotiator.lastName == 'Heidi') {
+  document.getElementById('realtor-image').setAttribute('src', 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf1dd904499dbfa6b6c_team_heidi.png')
+} else if (obj.negotiator.firstName == 'Elke' || obj.negotiator.lastName == 'Elke') {
+  document.getElementById('realtor-image').setAttribute('src', 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf19c269534fde58420_team_elke.png')
+} else if (obj.negotiator.firstName == 'Nathalie' || obj.negotiator.lastName == 'Nathalie') {
+  document.getElementById('realtor-image').setAttribute('src', 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf159086b96ae886ddf_team_nathalie.png')
 }
 
-
+if (obj.orientationTerrace) {
+  var criterium = document.createElement("p")
+  criterium.innerText = 'Orientation terrace'
+  var value = document.createElement("p")
+  value.innerText = obj.orientationTerrace
+  document.getElementById('orientation-terrace').appendChild(criterium)
+  document.getElementById('orientation-terrace').appendChild(value)
+  document.getElementById('orientation-terrace').style.display = "grid"
+}
+if (obj.orientationGarden) {
+  var criterium = document.createElement("p")
+  criterium.innerText = 'Orientation garden'
+  var value = document.createElement("p")
+  value.innerText = obj.orientationGarden
+  document.getElementById('orientation-garden').appendChild(criterium)
+  document.getElementById('orientation-garden').appendChild(value)
+  document.getElementById('orientation-garden').style.display = "grid"
+}
+if (obj.orientationBalcony) {
+  var criterium = document.createElement("p")
+  criterium.innerText = 'Orientation balcony'
+  var value = document.createElement("p")
+  value.innerText = obj.orientationBalcony
+  document.getElementById('orientation-balcony').appendChild(criterium)
+  document.getElementById('orientation-balcony').appendChild(value)
+  document.getElementById('orientation-balcony').style.display = "grid"
+}
+if (obj.dpe) {
+  var dpeCriterium = document.createElement("p")
+  dpeCriterium.innerText = 'DPE'
+  var dpeValue = document.createElement("p")
+  dpeValue.innerText = obj.dpe
+  document.getElementById('dpe').appendChild(dpeCriterium)
+  document.getElementById('dpe').appendChild(dpeValue)
+  document.getElementById('dpe').style.display = "grid"
+}
+if (obj.greenhouseEmissions) {
+  var greenhouseCriterium = document.createElement("p")
+  greenhouseCriterium.innerText = 'DPE'
+  var greenhouseValue = document.createElement("p")
+  greenhouseValue.innerText = obj.greenhouseEmissions
+  document.getElementById('greenhouse').appendChild(greenhouseCriterium)
+  document.getElementById('greenhouse').appendChild(greenhouseValue)
+  document.getElementById('greenhouse').style.display = "grid"
+}
+if (obj.co2Emissions) {
+  var co2Criterium = document.createElement("p")
+  co2Criterium.innerText = 'CO2 Emissions'
+  var co2Value = document.createElement("p")
+  co2Value.innerText = obj.co2Emissions
+  document.getElementById('co2').appendChild(co2Criterium)
+  document.getElementById('co2').appendChild(co2Value)
+  document.getElementById('co2').style.display = "grid"
+}
 if (obj.plotArea) {
   var totaleOppCriterium = document.createElement("p")
   totaleOppCriterium.innerText = 'Totale oppervlakte'
@@ -124,7 +183,6 @@ if (obj.plotArea) {
   document.getElementById('totale-opp').appendChild(totaleOppValue)
   document.getElementById('totale-opp').style.display = "grid"
 }
-
 if (obj.liveableArea) {
   var bewoonbareOppCriterium = document.createElement("p")
   bewoonbareOppCriterium.innerText = 'Bewoonbare oppervlakte'
@@ -134,7 +192,6 @@ if (obj.liveableArea) {
   document.getElementById('bewoonbare-opp').appendChild(bewoonbareOppValue)
   document.getElementById('bewoonbare-opp').style.display = "grid"
 }
-
 if (obj.epcReference) {
   var epcReferentieCriterium = document.createElement("p")
   epcReferentieCriterium.innerText = 'EPC referentie'
@@ -144,7 +201,6 @@ if (obj.epcReference) {
   document.getElementById('epc-ref').appendChild(epcReferentieValue)
   document.getElementById('epc-ref').style.display = "grid"
 }
-
 if (obj.epcLevel) {
   var epcLevelCriterium = document.createElement("p")
   epcLevelCriterium.innerText = 'EPC level'
@@ -154,7 +210,6 @@ if (obj.epcLevel) {
   document.getElementById('epc-level').appendChild(epcLevelValue)
   document.getElementById('epc-level').style.display = "grid"
 }
-
 if (obj.epcValue) {
   var epcCriterium = document.createElement("p")
   epcCriterium.innerText = 'EPC'
@@ -164,7 +219,6 @@ if (obj.epcValue) {
   document.getElementById('epc').appendChild(epcValue)
   document.getElementById('epc').style.display = "grid"
 }
-
 var overstromingsgevoeligheidCriterium = document.createElement("p")
 overstromingsgevoeligheidCriterium.innerText = 'Overstromingsgevoeligheid'
 var overstromingsgevoeligheidValue = document.createElement("p")
@@ -172,7 +226,6 @@ if (obj.floodRiskArea) { overstromingsgevoeligheidValue.innerText = 'Ja' } else 
 document.getElementById('overstromingsgevoeligheid').appendChild(overstromingsgevoeligheidCriterium)
 document.getElementById('overstromingsgevoeligheid').appendChild(overstromingsgevoeligheidValue)
 document.getElementById('overstromingsgevoeligheid').style.display = "grid"
-
 
 var afgebakendeZoneCriterium = document.createElement("p")
 afgebakendeZoneCriterium.innerText = 'Afgebakende zone'
@@ -182,8 +235,6 @@ document.getElementById('afgebakende-zone').appendChild(afgebakendeZoneCriterium
 document.getElementById('afgebakende-zone').appendChild(afgebakendeZoneValue)
 document.getElementById('afgebakende-zone').style.display = "grid"
 
-
-// if () {
 var certificaatElektriciteitCriterium = document.createElement("p")
 certificaatElektriciteitCriterium.innerText = 'Certificaat elektriciteit'
 var certificaatElektriciteitValue = document.createElement("p")
@@ -191,9 +242,7 @@ certificaatElektriciteitValue.innerText = ''
 document.getElementById('certificaat-elektriciteit').appendChild(certificaatElektriciteitCriterium)
 document.getElementById('certificaat-elektriciteit').appendChild(certificaatElektriciteitValue)
 document.getElementById('certificaat-elektriciteit').style.display = "grid"
-// }
 
-// if () {
 var stedenbouwkundigeBestemmingCriterium = document.createElement("p")
 stedenbouwkundigeBestemmingCriterium.innerText = 'Stedenbouwkundige bestemming'
 var stedenbouwkundigeBestemmingValue = document.createElement("p")
@@ -201,7 +250,6 @@ stedenbouwkundigeBestemmingValue.innerText = ''
 document.getElementById('stedenbouwkundige-bestemming').appendChild(stedenbouwkundigeBestemmingCriterium)
 document.getElementById('stedenbouwkundige-bestemming').appendChild(stedenbouwkundigeBestemmingValue)
 document.getElementById('stedenbouwkundige-bestemming').style.display = "grid"
-// }
 
 var dagvaardingStedenbouwkundigeOvertredingCriterium = document.createElement("p")
 dagvaardingStedenbouwkundigeOvertredingCriterium.innerText = 'Dagvaarding stedenbouwkundige overtredingen'
@@ -235,7 +283,6 @@ document.getElementById('recht-voorkoop').appendChild(voorkoopRechtCriterium)
 document.getElementById('recht-voorkoop').appendChild(voorkoopRechtValue)
 document.getElementById('recht-voorkoop').style.display = "grid"
 
-// if () {
 var asbuiltCriterium = document.createElement("p")
 asbuiltCriterium.innerText = 'As-built attest'
 var asbuiltValue = document.createElement("p")
@@ -243,8 +290,6 @@ asbuiltValue.innerText = ''
 document.getElementById('as-built').appendChild(asbuiltCriterium)
 document.getElementById('as-built').appendChild(asbuiltValue)
 document.getElementById('as-built').style.display = "grid"
-// }
-
 
 var energieArray = obj.energy.split(",")
 var comfortArray = obj.comfort.split(",")
