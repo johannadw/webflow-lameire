@@ -108,6 +108,14 @@ for (let i = 0; i < 4; i++) {
   // }
 }
 
+var allPhotosBtn = document.getElementById('all-photos')
+
+allPhotosBtn.addEventListener("click", openImagesModal);
+
+function openImagesModal() {
+  console.log("open modal")
+}
+
 // Verantwoordelijke
 document.getElementById('realtor-name').innerText = obj.negotiator.firstName
 if (obj.negotiator.firstName == 'Wout' || obj.negotiator.lastName == 'Wout') {
