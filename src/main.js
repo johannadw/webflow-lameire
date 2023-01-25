@@ -17,8 +17,8 @@ var obj = {
   orientationGarden: 'E',
   orientationBalcony: '',
   // thumbnailImage: '',
-  // videoUrl: '',
-  // virtualTour: '',
+  videoUrl: '',
+  virtualTour: '',
   askingPrice: '1000000',
   amenities: {
     attic: 'True',
@@ -76,6 +76,18 @@ var obj = {
     { url: 'https://cdn.sweepbright.com/properties/presets/original/a59f1b7b-44a0-4d2a-9235-c469bd9ff904' },
     { url: 'https://cdn.sweepbright.com/properties/presets/original/86eaf9b4-f09b-44a7-96e2-c6c9735e20c5' },
     { url: 'https://cdn.sweepbright.com/properties/presets/original/078ae215-e95c-4701-8abc-c0c25ef4c8dc' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/9625ecd0-b31b-4566-8dd4-5c66f7aa3e5a' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/da20a991-1de7-4ca9-a942-3e0d9dd80f38' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/e25f54d3-5e76-4821-9301-df3a22d987a0' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/a59f1b7b-44a0-4d2a-9235-c469bd9ff904' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/86eaf9b4-f09b-44a7-96e2-c6c9735e20c5' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/078ae215-e95c-4701-8abc-c0c25ef4c8dc' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/9625ecd0-b31b-4566-8dd4-5c66f7aa3e5a' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/da20a991-1de7-4ca9-a942-3e0d9dd80f38' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/e25f54d3-5e76-4821-9301-df3a22d987a0' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/a59f1b7b-44a0-4d2a-9235-c469bd9ff904' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/86eaf9b4-f09b-44a7-96e2-c6c9735e20c5' },
+    { url: 'https://cdn.sweepbright.com/properties/presets/original/078ae215-e95c-4701-8abc-c0c25ef4c8dc' },
     { url: 'https://cdn.sweepbright.com/properties/presets/original/9625ecd0-b31b-4566-8dd4-5c66f7aa3e5a' }
   ],
   yearBuilt: '1970',
@@ -85,47 +97,135 @@ var obj = {
   }
 }
 
+
+if (obj.videoUrl && obj.virtualTour) {
+  document.getElementById('video-tab').style.display = 'block'
+  document.getElementById('video-content').style.display = 'block'
+  document.getElementById('video-wrapper').style.display = 'block'
+  document.getElementById('tour-wrapper').style.display = 'block'
+
+} else if (!obj.videoUrl && obj.virtualTour) {
+  document.getElementById('video-tab').style.display = 'block'
+  document.getElementById('video-content').style.display = 'block'
+  document.getElementById('tour-wrapper').style.display = 'block'
+
+} else if (obj.videoUrl && !obj.virtualTour) {
+  document.getElementById('video-tab').style.display = 'block'
+  document.getElementById('video-content').style.display = 'block'
+  document.getElementById('video-wrapper').style.display = 'block'
+
+} else { }
+
+
 document.getElementById('bouwjaar').innerText = obj.yearBuilt
 
 var imageContainer = document.getElementsByClassName('detail_list')[0]
+
+var smallImages = document.getElementsByClassName('detail_image-wrapper-small')
+
 for (let i = 0; i < 4; i++) {
   var imageEl = document.createElement("img")
-  imageEl.setAttribute('src', obj.imageCollection[i].url)
-  // if (obj.imageCollection[i] < 5) {
+  imageEl.src = obj.imageCollection[i].url
+  imageEl.addEventListener("click", function () { openModal(obj.imageCollection[i].url) })
   imageEl.classList.add("detail_image-small")
-
-  var detailItem = document.createElement("div")
-  detailItem.classList.add('detail_item')
-  var detailLightboxLink = document.createElement("div")
-  detailLightboxLink.classList.add('detail_lightbox-link')
-  var detailImageWrapperSmall = document.createElement("div")
-  detailImageWrapperSmall.classList.add('detail_image-wrapper-small')
-
-  detailImageWrapperSmall.appendChild(imageEl)
-  detailLightboxLink.appendChild(detailImageWrapperSmall)
-  detailItem.appendChild(detailLightboxLink)
-  imageContainer.appendChild(detailItem)
-  // }
+  smallImages[i].appendChild(imageEl)
 }
 
 var allPhotosBtn = document.getElementById('all-photos')
+var photosModal = document.getElementById('photos-modal')
+var modalMainImage = document.getElementById('photos-modal-main-image')
+var modalClose = document.getElementById('modal-close')
+var thumbnailImage = document.getElementById('thumbnail-image')
+var arrowNext = document.getElementById("modal-arrow-next")
+var arrowPrev = document.getElementById("modal-arrow-prev")
+var modalBottom = document.getElementById('photos-modal-bottom')
 
-allPhotosBtn.addEventListener("click", openImagesModal);
+thumbnailImage.addEventListener("click", function () { openModal(thumbnailImage.src) });
+allPhotosBtn.addEventListener("click", function () { openModal(false) });
+modalClose.addEventListener("click", function () { closeModal() });
+arrowNext.addEventListener("click", function () { nextSlide() })
 
-function openImagesModal() {
-  console.log("open modal")
+var photosMainImage = document.createElement('img')
+photosMainImage.classList.add('detail_modal_top-image')
+photosMainImage.src = obj.imageCollection[2].url
+modalMainImage.appendChild(photosMainImage)
+
+// Show all bottom images in the modal
+for (let i = 0; i < obj.imageCollection.length; i++) {
+  var modalBottomImage = document.createElement("img")
+  modalBottomImage.src = obj.imageCollection[i].url
+  modalBottomImage.addEventListener("click", function () { changeImage(obj.imageCollection[i].url) })
+  modalBottomImage.classList.add("detail_modal_bottom-image")
+  var modalBottomImageWrapper = document.createElement("div")
+  modalBottomImageWrapper.classList.add('detail_modal_bottom-image-wrapper')
+  modalBottomImageWrapper.appendChild(modalBottomImage)
+  modalBottom.appendChild(modalBottomImageWrapper)
 }
+
+
+function changeImage(imageSrc) {
+  photosMainImage.src = imageSrc
+}
+function openModal(image) {
+  // When clicked on an image, set image as main image
+  if (image) {
+    photosMainImage.src = image
+  } else {
+    // When clicked on button, set first image as main image
+    photosMainImage.src = obj.imageCollection[0].url
+  }
+  photosModal.style.display = 'grid'
+
+  $('.detail_modal_slider').slick({
+    infinite: true,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    prevArrow: arrowPrev,
+    nextArrow: arrowNext,
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ]
+  });
+}
+function closeModal() {
+  photosModal.style.display = 'none'
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Verantwoordelijke
 document.getElementById('realtor-name').innerText = obj.negotiator.firstName
 if (obj.negotiator.firstName == 'Wout' || obj.negotiator.lastName == 'Wout') {
-  document.getElementById('realtor-image').setAttribute('src', 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf13b0afb48204ca454_team_wout.png')
+  document.getElementById('realtor-image').src = 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf13b0afb48204ca454_team_wout.png'
 } else if (obj.negotiator.firstName == 'Heidi' || obj.negotiator.lastName == 'Heidi') {
-  document.getElementById('realtor-image').setAttribute('src', 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf1dd904499dbfa6b6c_team_heidi.png')
+  document.getElementById('realtor-image').src = 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf1dd904499dbfa6b6c_team_heidi.png'
 } else if (obj.negotiator.firstName == 'Elke' || obj.negotiator.lastName == 'Elke') {
-  document.getElementById('realtor-image').setAttribute('src', 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf19c269534fde58420_team_elke.png')
+  document.getElementById('realtor-image').src = 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf19c269534fde58420_team_elke.png'
 } else if (obj.negotiator.firstName == 'Nathalie' || obj.negotiator.lastName == 'Nathalie') {
-  document.getElementById('realtor-image').setAttribute('src', 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf159086b96ae886ddf_team_nathalie.png')
+  document.getElementById('realtor-image').src = 'https://uploads-ssl.webflow.com/636134ed842a02654a3bbfe4/63b2cdf159086b96ae886ddf_team_nathalie.png'
 }
 
 if (obj.orientationTerrace) {
@@ -370,48 +470,9 @@ for (let i = 0; i < verwarmingArray.length; i++) {
 var beschikbaarVanaf = document.createElement("p")
 beschikbaarVanaf.innerText = 'Beschikbaar vanaf: ' + obj.availableFrom
 
-
-// TODO: Aflossing berekenen?
-
-// Omgeving
-// TODO: var gezondheidApotheker = 
-// TODO: var gezondheidTandarts = 
-// TODO: var onderwijsBasisKleuter = 
-// TODO: var onderwijsSecundair = 
-// TODO: var vervoerBusTram = 
-// TODO: var vervoerTrein = 
-// TODO: var warenhuizenAlbertHeijn = 
-// TODO: var warenhuizenAldi = 
-// TODO: var warenhuizenCarrefour = 
-// TODO: var warenhuizenColruyt = 
-// TODO: var warenhuizenDelhaize = 
-
-
-
-
-// document.getElementById('adres').innerText = ligging
-// document.getElementById('vraag-prijs').innerText = vraagPrijs
-
-// document.getElementById('property-type').innerText = propertyType;
-// document.getElementById('thumbnail-image').setAttribute('src', obj.thumbnailImage)
-// document.getElementById('thumbnail-image').setAttribute('srcset', obj.thumbnailImage)
-
-// var imageWrappers = document.getElementsByClassName('detail_image-small')
-// var images = obj.imageCollection
-// for (let i = 0; i < images.length; i++) {
-//   if (i < 4) {
-//     imageWrappers[i].setAttribute('src', images[i].url)
-//     imageWrappers[i].setAttribute('srcset', images[i].url)
-//   }
-// }
-
-
-
-
-
 // Algemeen
 document.getElementById('referentie').innerText = obj.reference
-document.getElementById('transaction-type').innerText = obj.transactionType
+// document.getElementById('transaction-type').innerText = obj.transactionType
 document.getElementById('property-type').innerText = obj.propertyType
 document.getElementById('property-subtype').innerText = obj.propertySubtype
 document.getElementById('algemene-staat').innerText = obj.generalCondition
@@ -760,3 +821,15 @@ if (obj.amenities.terrace == 'True') {
   document.getElementById('terras').appendChild(terrasValue)
   document.getElementById('verdieping-aantal').style.display = "grid"
 }
+
+
+
+
+$(document).ready(function () {
+
+});
+
+
+
+
+
