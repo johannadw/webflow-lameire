@@ -6,8 +6,8 @@ import purposeStatuses from './data/purposeStatuses.json'
 import subcategories from './data/subcategories.json'
 
 let baseURL = 'https://api.whise.eu/';
-let user = 'simon@hartstikke.be';
-let pass = 'LRbHq36zqR#7X!S';
+let user = import.meta.env.VITE_WHISE_USER;
+let pass = import.meta.env.VITE_WHISE_PASSWORD;
 let clientId = 9654;
 let officeId = 12121;
 

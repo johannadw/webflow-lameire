@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import eslintPlugin from 'vite-plugin-eslint'
 
+
 // vite.config.js
 export default defineConfig({
   plugins: [eslintPlugin({ cache: false })],
@@ -17,10 +18,10 @@ export default defineConfig({
     minify: true,
     manifest: true,
     rollupOptions: {
-      input: './src/webflow.js',
+      input: './src/whise.js',
       output: {
         format: 'umd',
-        entryFileNames: 'webflow.js',
+        entryFileNames: 'whise.js',
         esModule: false,
         compact: true,
         globals: {
