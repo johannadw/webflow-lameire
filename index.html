@@ -6,10 +6,29 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vite App</title>
+  <style>
+    #done {
+      display: grid;
+      width: 50px;
+      height: 100px;
+    }
+
+    /* #category {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    } */
+  </style>
 </head>
 
 <body>
-  <script type="module" src="/src/main.js"></script>
+  <h1>DONE</h1>
+  <div id="done"></div>
+  <h2>CATEGORY</h2>
+  <div id="category"></div>
+  <h1>TODO</h1>
+  <div id="todo"></div>
+
+  <script type="module" src="/src/webflow.js"></script>
 </body>
 
 </html>
