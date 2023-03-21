@@ -180,30 +180,3 @@ async function getClientToken() {
         console.log(e);
     }
 })();
-
-                // pandCustomCode = {
-                //     reference: '',
-                //     generalCondition: 'good',
-                //     orientationBalcony: '',
-                //     negotiatedPrice: '',
-                //     costs: '',
-                //     taxes: '',
-                //     propertyTax: '',
-                //     recurringCosts: '',
-                //     yearlyBudgetedBuildingCosts: '',
-                //     amenities: { attic: 'False', balcony: 'False', basement: 'False', climateControl: 'False', code: 'False', coolingRoom: 'False', displayWindow: 'False', drainage: 'False', exteriorParking: 'False', fence: 'False', fenced: 'False', garden: 'False', guesthouse: 'False', interiorParking: 'False', keyCard: 'False', lift: 'False', manualGate: 'False', parking: 'False', pool: 'False', printCopyArea: 'False', receptionArea: 'False', remoteControl: 'False', roadAccess: 'False', serverRoom: 'False', sewerAccess: 'False', terrace: 'False', utilitiesAccess: 'False', waitingAreaElectricalGate: 'False', waterAccess: 'False' },
-                // plotArea: '',
-                // preemptiveRight: 'False',
-                // urbanPlanningBreach: 'False',
-                // subdivisionAuthorisation: 'False',
-
-                // greenhouseEmissions: '',
-                // energy: '',
-                // omfort: '',
-                // ecology: '',
-                // security: '',
-                // heatingCooling: '',
-                // availableFrom: '',
-                // negotiator: { firstName: 'Wout', lastName: 'Calsijn' }
-                // }
-

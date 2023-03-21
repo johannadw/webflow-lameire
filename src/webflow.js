@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const auth = 'Bearer ' + import.meta.env.VITE_BEARER_TOKEN
+
 const options = {
     method: 'POST',
     url: 'https://api.webflow.com/collections/6414a4b48fdbc81367c66506/items',
