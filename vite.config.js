@@ -18,10 +18,10 @@ export default defineConfig({
     minify: true,
     manifest: true,
     rollupOptions: {
-      input: './src/webflow.js',
+      input: './src/whise.js',
       output: {
         format: 'umd',
-        entryFileNames: 'webflow.js',
+        entryFileNames: 'whise.js',
         esModule: false,
         compact: true,
         globals: {

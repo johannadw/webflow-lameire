@@ -1,24 +1,51 @@
 import axios from 'axios'
+// import cors from 'cors'
+// import express from 'express'
 
+// var app = express();
+// app.use(
+//     cors({
+//         origin: "*",
+//     })
+// );
+
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     next();
+// });
 import categories from './data/categories.json'
 import purposes from './data/purposes.json'
 import purposeStatuses from './data/purposeStatuses.json'
 import subcategories from './data/subcategories.json'
 
-let baseURL = 'https://api.whise.eu/';
-let user = import.meta.env.VITE_WHISE_USER;
-let pass = import.meta.env.VITE_WHISE_PASSWORD;
-let clientId = 9654;
-let officeId = 12121;
+const WHISE_BASEURL = 'https://api.whise.eu/';
+const WHISE_USER = import.meta.env.VITE_WHISE_USER;
+const WHISE_PASS = import.meta.env.VITE_WHISE_PASSWORD;
+const CLIENTID = 9654;
+const OFFICEID = 12121;
 
-async function getToken() {
-    let url = baseURL + 'token';
+var pandNaam
+var pandSlug
+var pandThumbnail
+var pandStatus
+var pandPrijs
+var pandAdresLine1
+var pandAdresLine2
+var pandLocatie
+var pandAantalBadkamers
+var pandAantalSlaapkamers
+var pandCategory
+var pandSubcategory
+var pandCustomCode
+
+async function whiseGetToken() {
+    let url = WHISE_BASEURL + 'token';
     let headers = {
         'Content-Type': 'application/json'
     };
     let body = {
-        username: user,
-        password: pass
+        username: WHISE_USER,
+        password: WHISE_PASS
     };
 
     try {
@@ -36,17 +63,16 @@ async function getToken() {
     }
 }
 
-async function getClientToken() {
-    let url = baseURL + 'v1/admin/clients/token';
+async function whiseGetClientToken() {
+    let url = WHISE_BASEURL + 'v1/admin/clients/token';
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${await getToken()}`
+        'Authorization': `Bearer ${await whiseGetToken()}`
     };
     let body = {
-        ClientId: clientId,
-        OfficeId: officeId
+        ClientId: CLIENTID,
+        OfficeId: OFFICEID
     };
-
     try {
         let resp = await axios.post(url, body,
             {
@@ -62,11 +88,11 @@ async function getClientToken() {
     }
 }
 
-(async function main() {
-    let url = baseURL + 'v1/estates/list';
+async function whiseGetData() {
+    let url = WHISE_BASEURL + 'v1/estates/list';
     let headers = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${await getClientToken()}`
+        'Authorization': `Bearer ${await whiseGetClientToken()}`
     };
     let body = {
         Page: {
@@ -86,27 +112,25 @@ async function getClientToken() {
                 if (!estate) {
                     continue;
                 }
-
-                var pandNaam = estate.name
-                var pandSlug = estate.id
-                var pandThumbnail = estate.pictures[0].urlSmall
-                var pandStatus = getPurpose()
-                var pandPrijs = estate.price
-                var pandAdresLine1
-                var pandAdresLine2 = estate.zip + " " + estate.city + " " + estate.country.id
-                var pandLocatie = estate.city
-                var pandAantalBadkamers = getBathrooms()
-                var pandAantalSlaapkamers = getBedrooms()
+                pandNaam = estate.name
+                pandSlug = estate.id
+                pandThumbnail = estate.pictures[0].urlSmall
+                pandStatus = getPurpose()
+                pandPrijs = estate.price
+                pandAdresLine2 = estate.zip + " " + estate.city + " " + estate.country.id
+                pandLocatie = estate.city
+                pandAantalBadkamers = getBathrooms()
+                pandAantalSlaapkamers = getBedrooms()
                 var pandDetails
-                var pandCategory = getCategory()
-                var pandSubcategory = getSubcategory()
+                pandCategory = getCategory()
+                pandSubcategory = getSubcategory()
                 var detailList = []
                 if (estate.box) {
                     pandAdresLine1 = estate.address + " " + estate.number + " " + estate.box
                 } else {
                     pandAdresLine1 = estate.address + " " + estate.number
                 }
-                var pandCustomCode = {
+                pandCustomCode = {
                     locationLine1: pandAdresLine1,
                     locationLine2: pandAdresLine2,
                     description: estate.shortDescription[0].content,
@@ -126,8 +150,6 @@ async function getClientToken() {
                     pandDetails[detail.group] = group
                     return pandDetails
                 }, {})
-
-                console.log(pandDetails)
 
                 function getBathrooms() {
                     if (estate.bathRooms) {
@@ -173,10 +195,40 @@ async function getClientToken() {
                         }
                     }
                 }
+
+                // pandCustomCode = JSON.stringify(pandCustomCode)
+
+                const fields = {
+                    name: pandNaam,
+                    status: pandStatus,
+                    prijs: pandPrijs,
+                    thumbnail: pandThumbnail,
+                    'adres-line-1': pandAdresLine1,
+                    'adres-line-2': pandAdresLine2,
+                    'aantal-slaapkamers': pandAantalSlaapkamers,
+                    'aantal-badkamers': pandAantalBadkamers,
+                    locatie: pandLocatie,
+                    'custom-code': pandCustomCode,
+                    _archived: false,
+                    _draft: false,
+                    slug: pandSlug,
+                };
+
+                // for (let details in obj['Building']) {
+                //     if (obj['Building'][details].id === 14) {
+                //         console.log(obj['Building'][details])
+                //     }
+                // }
+                console.log(fields['custom-code']['Building'])
+                // Object.is(fields['custom-code']['Building']['id'], value);
+
+                return { pandNaam, pandSlug, pandThumbnail, pandStatus, pandPrijs, pandAdresLine1, pandAdresLine2, pandLocatie, pandAantalBadkamers, pandAantalSlaapkamers, pandCategory, pandSubcategory, pandCustomCode }
             }
         }
     }
     catch (e) {
         console.log(e);
     }
-})();
+};
+
+whiseGetData()
